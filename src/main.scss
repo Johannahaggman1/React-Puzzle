@@ -1,0 +1,24 @@
+@import './styles/board';
+@import './styles/header';
+
+body {
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+    min-height: 90vh;
+    background: #f7f6f4;
+    color: #322832;
+  }
+  code {
+    font-family: "Open Sans", sans-serif;
+  }
+  /* Centrerar allt i appen */
+  .App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    //place-items: center;
+    height: 100vh;
+  }
+  h1 {
+    margin: 0;
+  }
