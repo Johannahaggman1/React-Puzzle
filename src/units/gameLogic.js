@@ -67,7 +67,7 @@ export function isSolvable(tiles) {
   }
   
 
-  export function updatePosition(tiles, index) {
+/*   export function updatePosition(tiles, index) {
     //let {positions} = this.state;
     const tilesResult = [...tiles];
   //Letar upp index 8 (tomma rutan) 
@@ -95,10 +95,34 @@ export function isSolvable(tiles) {
     } else {
       
     }
-  }
+  } */
   //Funktionen som flyttar rutorna/ pjäserna. 
   export function swap(tiles, src, dest) {
     const tilesResult = [...tiles];
     [tilesResult[src], tilesResult[dest]] = [tilesResult[dest], tilesResult[src]];
+    return tilesResult;
+  }
+
+  export function swap2(tiles, index) {
+    let tilesResult = [...tiles];
+    let emptyIndex = tilesResult.indexOf(8);
+    let targetIndex = tilesResult.indexOf(index);
+    const dif = Math.abs(targetIndex - emptyIndex);
+    let indexPosition = getMatrixPosition(targetIndex);
+    let emptyPosition = getMatrixPosition(emptyIndex);
+    console.log(indexPosition, emptyPosition);
+    if (indexPosition.col === emptyPosition.col || indexPosition.row === emptyPosition.row) {
+      if (dif === 1 || dif === 3) {
+        tilesResult[emptyIndex] = index;
+        tilesResult[targetIndex] = 8;
+      }
+      if (dif === 2 || dif === 6) {
+        const middleIndex = Math.round((targetIndex + emptyIndex)/2);
+        const middleValue = tilesResult[middleIndex];
+        tilesResult[emptyIndex] = middleValue;
+        tilesResult[middleIndex] = index;
+        tilesResult[targetIndex] = 8;
+      }
+    }
     return tilesResult;
   }
