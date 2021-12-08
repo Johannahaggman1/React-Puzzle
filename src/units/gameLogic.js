@@ -55,13 +55,6 @@ export function isSolvable(tiles) {
       //annars (:) shuffla om. 
       : shuffle(shuffledTiles);
   }
-  
-  //Kollar om kan flytta. 
-  export function canSwap(srcIndex, destIndex) {
-    const { row: srcRow, col: srcCol } = getMatrixPosition(srcIndex);
-    const { row: destRow, col: destCol } = getMatrixPosition(destIndex);
-    return Math.abs(srcRow - destRow) + Math.abs(srcCol - destCol) === 1;
-  }
 
   export function swap(tiles, index) {
     let tilesResult = [...tiles];

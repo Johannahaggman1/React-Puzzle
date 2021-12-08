@@ -8,17 +8,15 @@ function Board() {
   const [tiles, setTiles] = useState([...Array(9).keys()]);  
   const [isStarted, setIsStarted] = useState(false);
 
-
+  //Blandar om 
   const shuffleTiles = () => {
     const shuffledTiles = shuffle(tiles)
     setTiles(shuffledTiles);
   }
 
   const swapTiles = (tileIndex) => {
-    //if (canSwap(tileIndex, tiles.indexOf(tiles.length - 1))) {
       const swappedTiles = swap(tiles, tiles[tileIndex] )
       setTiles(swappedTiles)
-    //}
   }
 
   // Hanterar själva swap klicket och kallar på swapTiles funktionen
