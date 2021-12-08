@@ -1,6 +1,5 @@
 import React from "react";
 import { getMatrixPosition, getVisualPosition } from "../units/gameLogic";
-//import { TILES, GRID } from "../units/constants";
 
 function Tile({ tile, index, width, height, handleTileClick }) {
   const { row, col } = getMatrixPosition(index);

@@ -1,5 +1,4 @@
-// Credits to https://codepen.io/unindented/pen/QNWdRQ
-// Funktion som gör att även om vi slumpar om så ska puzzlet fortfarande va lösbart
+// Funktion som gör att pusslet går att lösa även om vi slumpar om. 
 export function isSolvable(tiles) {
     let product = 1;
     for (let i = 1, l = 9 - 1; i <= l; i++) {
@@ -20,14 +19,12 @@ export function isSolvable(tiles) {
     return true;
   }
   
-  // Get the linear index from a row/col pair.
-  // Här får vi ut index, dvs på rutan du klickat på (inte själva numret utan platsen på spelplanen 0-9) 
+  //index på klickad ruta
   export function getIndex(row, col) {
     return parseInt(row, 10) * 350 + parseInt(col, 10);
   }
   
-  // Get the row/col pair from a linear index.
-  // Ger oss index på vilken rad och kolumn (returnerar row index och col index)
+  // Ger oss index på vilken rad och kolumn (returnerar row index + col index)
   export function getMatrixPosition(index) {
     return {
       row: Math.floor(index / 3),
@@ -35,7 +32,7 @@ export function isSolvable(tiles) {
     };
   }
   
-  // tar fram vilket positon varje ruta har i pixlar. 
+  // tar fram vilket positon varje ruta har i pixlar
   export function getVisualPosition(row, col, width, height) {
     return {
       x: col * width,
@@ -65,62 +62,36 @@ export function isSolvable(tiles) {
     const { row: destRow, col: destCol } = getMatrixPosition(destIndex);
     return Math.abs(srcRow - destRow) + Math.abs(srcCol - destCol) === 1;
   }
-  
 
-/*   export function updatePosition(tiles, index) {
-    //let {positions} = this.state;
-    const tilesResult = [...tiles];
-  //Letar upp index 8 (tomma rutan) 
-    let emptyIndex = tilesResult.indexOf(8);
-  //Rutan man klickat på (index)
-    let targetIndex = tilesResult.indexOf(index);
-    //Räkna ut skillnad mellan vald och aktuell ruta, via index i array (och inte position i rutnätet)
-    const dif = Math.abs(targetIndex - emptyIndex);
-  //Räknar ut diffen i arrayn, om jämte = 1, eller 3 (en ruta i kolumnen) så sätts nya värden i de två positionerna i arrayn.
-    if (dif === 1 || dif === 3) {
-      tilesResult[emptyIndex] = index;
-  //Flyttar 
-        tilesResult[targetIndex] = 8;
-        //this.setState({tilesResult});
-        return tilesResult;
-  //Uppterar positionerna och 
-  //2 = om en ifrån på samma rad, 6 = en ifrån kolumn
-    } else if (dif === 2 || dif === 6) {
-       // const oldTargetIndex = tilesResult[targetIndex];
-            tilesResult[emptyIndex] = index;
-      //Flyttar 
-            tilesResult[targetIndex] = 8;
-            //this.setState({tilesResult});
-            return tilesResult;
-    } else {
-      
-    }
-  } */
-  //Funktionen som flyttar rutorna/ pjäserna. 
-  export function swap(tiles, src, dest) {
-    const tilesResult = [...tiles];
-    [tilesResult[src], tilesResult[dest]] = [tilesResult[dest], tilesResult[src]];
-    return tilesResult;
-  }
-
-  export function swap2(tiles, index) {
+  export function swap(tiles, index) {
     let tilesResult = [...tiles];
+    //lediga luckan
     let emptyIndex = tilesResult.indexOf(8);
+    //Klickade rutan
     let targetIndex = tilesResult.indexOf(index);
+    //Avståndet mellan lediga luckan och klickade luckan 
     const dif = Math.abs(targetIndex - emptyIndex);
+    //Få raden och kolumen för den klickade rutan
     let indexPosition = getMatrixPosition(targetIndex);
+    //Få raden och kolumnen för den tomma rutan 
     let emptyPosition = getMatrixPosition(emptyIndex);
-    console.log(indexPosition, emptyPosition);
+    //Om klickade rutans kolumn index = tomma rutans kolumn index, eller klickade rutans rad index = tomma rutans rad index
     if (indexPosition.col === emptyPosition.col || indexPosition.row === emptyPosition.row) {
+      //Om diffen är 1 eller 3 så är klickade och tomma brevid varanda och vi byter plats på dem
       if (dif === 1 || dif === 3) {
         tilesResult[emptyIndex] = index;
         tilesResult[targetIndex] = 8;
       }
+      //om dif är 2 eller 6 så är de ett steg ifrån varandra. 
       if (dif === 2 || dif === 6) {
+        //klickade rutans index + tomma rutan index / 2 
         const middleIndex = Math.round((targetIndex + emptyIndex)/2);
         const middleValue = tilesResult[middleIndex];
+        //Lediga rutan får middleValue dvs värdet emellan dem 
         tilesResult[emptyIndex] = middleValue;
+        //mellan rutan får klickade rutans värde
         tilesResult[middleIndex] = index;
+        //klickade rutan hoppar till tomma rutan. 
         tilesResult[targetIndex] = 8;
       }
     }
