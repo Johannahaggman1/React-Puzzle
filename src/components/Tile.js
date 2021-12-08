@@ -1,4 +1,5 @@
 import React from "react";
+import { Motion, spring } from "react-motion";
 import { getMatrixPosition, getVisualPosition } from "../units/gameLogic";
 
 function Tile({ tile, index, width, height, handleTileClick }) {
@@ -11,12 +12,19 @@ function Tile({ tile, index, width, height, handleTileClick }) {
     translateY: visualPos.y,
   };
 
+  const motionStyle = {
+    translateX: spring(visualPos.x),
+    translateY: spring(visualPos.y)
+  }
+
   return (
+    <Motion style={motionStyle}>
+      {({ translateX, translateY }) => (
         <li
           style={{
             width: tileStyle.width,
             height: tileStyle.height,
-            transform: `translate3d(${tileStyle.translateX}px, ${tileStyle.translateY}px, 0)`,
+            transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
             opacity: tile === 9 - 1 ? 0 : 1,
           }}
           className="tile"
@@ -24,6 +32,8 @@ function Tile({ tile, index, width, height, handleTileClick }) {
         >
           {tile + 1}
        </li>
+       )}
+       </Motion>
   );
 }
 
